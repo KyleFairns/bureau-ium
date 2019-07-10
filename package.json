@@ -1,8 +1,27 @@
 {
   "name": "bureau-ium",
+  "description": "A library powered by Selenium and Frisby.js to make writing tests simpler and debugging easier",
   "version": "1.0.0-alpha.1",
   "license": "MIT",
-  "description": "A library powered by Selenium and Frisby.js to make writing tests simpler and debugging easier",
+
+  "author": {
+    "name": "Kyle Fairns"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KyleFairns/bureau-ium"
+  },
+  "keywords": [
+    "test",
+    "selenium",
+    "frisby",
+    "testing",
+    "automation",
+    "web",
+    "api",
+    "chai"
+  ],
+
   "scripts": {
     "docs": "./node_modules/.bin/jsdoc -c ./jsdoc.json"
   },
