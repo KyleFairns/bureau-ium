@@ -39,7 +39,7 @@ const {pom} = require(`${process.cwd()}/test-suite/pom/pom.js`),
 
 describe("A Menu Item", ()=>{
 	it("should be clickable", async ()=>{
-		return await (await menu.item.can.be.found).and.can.be.clicked
+		return await (await menu.item("Home").can.be.found).and.can.be.clicked
 	})
 }) 
 ```
