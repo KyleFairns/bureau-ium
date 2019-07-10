@@ -1,0 +1,502 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: abstraction/element.js</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                     
+                        <img src="../images/bureau-ium-release-pink-125x125.png" alt="logo">
+                    
+                     
+                        <h1 class="navbar-item">bureau-ium</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/KyleFairns/bureau-ium" target="_blank">Github</a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-getting-started.html">getting-started</a></li></ul></div><div class="category"><h2>Errors</h2><h3>Classes</h3><ul><li><a href="FindError.html">FindError</a></li><li><a href="TestError.html">TestError</a></li><li><a href="UrlConstructError.html">UrlConstructError</a></li></ul></div><div class="category"><h2>Internal</h2><h3>Classes</h3><ul><li><a href="Chain.html">Chain</a></li></ul><h3>Global</h3><ul><li><a href="global.html#config">config</a></li><li><a href="global.html#driver">driver</a></li></ul></div><div class="category"><h2>Test Data</h2><h3>Classes</h3><ul><li><a href="User.html">User</a></li></ul></div><div class="category"><h2>UI Interactions</h2><h3>Classes</h3><ul><li><a href="Browser.html">Browser</a></li><li><a href="Element.html">Element</a></li><li><a href="Wait.html">Wait</a></li></ul></div><div class="category"><h2>Url Interactions</h2><h3>Classes</h3><ul><li><a href="Url.html">Url</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>abstraction/element.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const {driver} = require("../browser_setup.js"),
+    {FindError, TestError} = require("./errors.js"),
+    {Chain} = require("./chain.js"),
+    {Wait} = require("./wait.js"),
+    {until, Key} = require("selenium-webdriver");
+
+
+class Element extends Chain {
+    /**
+     * @category UI Interactions
+     * @constructs
+     * @extends Chain
+     * @param {Object} locator The locator for the element. Can be anything accepted by selenium, in the format {&lt;i>type&lt;i>: &lt;i>locator&lt;i>}
+     * @classdesc For interacting with the elements on the webpage
+     * @example new Element({css: 'input[name="q"]'})
+     */
+    constructor(locator) {
+        super();
+
+        /**
+         * @name locator
+         * @memberOf Element
+         * @description The locator for the element. Can be anything accepted by selenium, in the format {&lt;i>type&lt;i>: &lt;i>locator&lt;i>}
+         * @returns Object
+         * @example await element.get.locator
+         */
+        this.locator = locator;
+
+
+        /**
+         * @name switches-element
+         * @memberOf Element
+         * @description
+         * "Keyword" Switches:
+         *    &lt;ul>
+         *        &lt;li>  send
+         *        &lt;li>  sent
+         *        &lt;li>  fill
+         *        &lt;li>  filled
+         *        &lt;li>  type
+         *        &lt;li>  typed
+         *    &lt;/ul>
+         *
+         * @example element.send.key("enter") // Turns on "send" switch
+         * element.can.be.filled.with("Hello, World!") // Turns on "filled" switch
+         */
+        ["send", "sent", "fill", "filled", "type", "typed"].forEach((descriptor) => {
+            this.switches[descriptor] = false;
+            return this;
+        });
+
+        /**
+         * @name language-chains-element
+         * @memberOf Element
+         * @description
+         * Language chains:
+         *    &lt;ul>
+         *        &lt;li>  in
+         *        &lt;li>  into
+         *    &lt;/ul>
+         *
+         * @example element.type.into.with("Hello, World")
+         * element.can.be.typed.into.with("Hello, World")
+         *
+         */
+        ["into"].forEach((descriptor) => {
+            return this[descriptor] = (() => {
+                return this;
+            })();
+        });
+
+    }
+
+    get send() {
+        this.switches.send = true;
+        return this;
+    }
+
+    get sent() {
+        this.switches.sent = true;
+        return this;
+    }
+
+    get fill() {
+        this.switches.fill = true;
+        return this;
+    }
+
+    get filled() {
+        this.switches.filled = true;
+        return this;
+    }
+
+    get type() {
+        this.switches.type = true;
+        return this;
+    }
+
+    get typed() {
+        this.switches.typed = true;
+        return this;
+    }
+
+    /**
+     * @name displayed
+     * @memberOf Element
+     * @description Asserts the elements visibility
+     * @returns {Promise&lt;*>}
+     * @example await element.should.eventually.be.displayed
+     */
+    get displayed() {
+        if (this.switches.not) {
+            return (async () => {
+                this.switches.development = true;
+                await Wait.for(until.elementIsNotVisible(await this.find()));
+                return this.resetSwitches;
+            })();
+        } else {
+            return (async () => {
+                this.switches.development = true;
+                await Wait.for(until.elementIsVisible(await this.find()));
+                return this.resetSwitches;
+            })();
+        }
+    }
+
+    /**
+     * @name find
+     * @memberOf Element
+     * @description Asserts that the element exists in the DOM
+     * @returns {Promise&lt;*>}
+     * @example await element.find();
+     */
+    async find() {
+        if (this.switches.development) {
+            return new Promise(async (resolve) => {
+                let element = await driver.findElement(this.locator);
+                resolve(element);
+            }).catch((e) => {
+                throw new FindError(e)
+            }).then((result) => {
+                return result;
+            });
+        } else if (this.switches.not) {
+            return await (async () => {
+                this.switches.development = true;
+                return await this.find().catch((e) => {
+                    if ((JSON.stringify(e).includes("NoSuchElementError") || JSON.stringify(e).includes("StaleElementReferenceError")) &amp;&amp; this.switches.not) {
+                        return true;
+                    } else {
+                        throw new FindError(e);
+                    }
+                }).then(() => {
+                    return this.resetSwitches;
+                });
+            })();
+        } else {
+            return (async () => {
+                return await Wait.for(until.elementLocated(this.locator)).then(() => {
+                    return this;
+                });
+
+            })();
+        }
+    }
+
+    /**
+     * @name found
+     * @memberOf Element
+     * @description Asserts that the element exists in the DOM
+     * @returns {Promise&lt;*>}
+     * @example await element.can.be.found
+     */
+    get found() {
+        return new Promise(async (resolve) => {
+            let result = await this.find();
+            resolve(result);
+        }).catch((e) => {
+            throw new FindError(e)
+        }).then((result) => {
+            return result;
+        });
+    }
+
+    /**
+     * @name location
+     * @memberOf Element
+     * @description Gets the co-ordinates of the element
+     * @returns {Promise&lt;*>}
+     * @example let location = await element.get.location;
+     */
+    get location() {
+        return new Promise(async () => {
+            this.switches.development = true;
+            return new Promise(await this.find().catch((e) => {
+                throw new FindError(e)
+            }).then((result) => {
+                return result;
+            })).getRect().catch((e) => {
+                throw new TestError(e);
+            }).then((result) => {
+                return {x: result.x, y: result.y};
+            });
+
+        })()
+    }
+
+    /**
+     * @name click
+     * @memberOf Element
+     * @description Clicks on the element provided
+     * @returns {Promise&lt;*>}
+     * @example await element.click;
+     */
+    get click() {
+        return this.find().catch((e) => {
+            throw new FindError(e)
+        }).then(async () => {
+            this.switches.development = true;
+            return await (await this.find().catch((e) => {
+                throw new FindError(e)
+            }).then((result) => {
+                return result;
+            })).click().then(() => {
+                return this.resetSwitches;
+            });
+        })
+        // await driver.actions({bridge: false}).move(this.location).click().perform(); // TODO: Will fix issue where elements are unclickable due to being covered by a transparent element, but won't work yet due to a bug: https://github.com/SeleniumHQ/selenium/issues/7191
+    }
+
+    /**
+     * @name clicked
+     * @memberOf Element
+     * @description Clicks on the element provided
+     * @returns {Promise&lt;*>}
+     * @example await element.can.be.clicked;
+     */
+    get clicked() {
+        return new Promise(async (resolve) => {
+            let result = await this.click;
+            return resolve(result);
+        }).catch((e) => {
+            throw new FindError(e);
+        }).then((result) => {
+            return result;
+        });
+    }
+
+    /**
+     * @name attribute
+     * @memberOf Element
+     * @description Gets the attribute given of the element
+     * @param {string} attribute
+     * @returns {Promise&lt;*>}
+     * @example let attribute = await element.get.attribute("id");
+     */
+    async attribute(attribute) {
+        return await this.find().then(async () => {
+            this.switches.development = true;
+            return await (await this.find().catch((e) => {
+                throw new FindError(e)
+            }).then((result) => {
+                return result;
+            })).getAttribute(attribute).then((result) => {
+                return result;
+            });
+        });
+    }
+
+    /**
+     * @name text
+     * @memberOf Element
+     * @description Gets the text of the element
+     * @returns {Promise&lt;*>}
+     * @example let text = await element.get.text;
+     */
+    get text() {
+        this.switches.development = true;
+        return (async () => {
+            return (await this.find().catch((e) => {
+                throw new FindError(e)
+            }).then((result) => {
+                return result;
+            })).getText().then((result) => {
+                return result;
+            });
+        })().catch((e) => {
+            throw new FindError(e);
+        }).then((result) => {
+            return result;
+        });
+    }
+
+    /**
+     * @name clear
+     * @memberOf Element
+     * @description Clears the text from the element
+     * @returns {Promise&lt;*>}
+     * @example await element.clear;
+     */
+    get clear() {
+        return this.find().catch((e) => {
+            throw new FindError(e)
+        }).then(async () => {
+            let text = await this.text;
+            for (let i = 0; i &lt; text.length; i++) {
+                await found.send.key("back space");
+                if (i >= (text.length - 1)) {
+                    return this;
+                }
+            }
+        })
+    }
+
+    /**
+     * @name cleared
+     * @memberOf Element
+     * @description Clears the text from the element
+     * @returns {Promise&lt;*>}
+     * @example await element.can.be.cleared;
+     */
+    get cleared() {
+        return new Promise(async (resolve) => {
+            let result = await this.clear;
+            return resolve(result);
+        }).catch((e) => {
+            throw new FindError(e);
+        }).then((result) => {
+            return result;
+        });
+    }
+
+    get in() {
+        return this;
+    }
+
+    /**
+     * @name with
+     * @memberOf Element
+     * @description Sends keys to the element
+     * @returns {Promise&lt;*>}
+     * @example await element.fill.with("Hello, World!");
+     * await element.can.be.typed.into.with("Hello, World");
+     */
+    async with(keys) {
+        return await this.clear.then(async () => {
+            return await this.send.keys(keys);
+        })
+    }
+
+    /**
+     * @name keys
+     * @memberOf Element
+     * @description Sends keys to the element
+     * @returns {Promise&lt;*>}
+     * @example await element.send.keys("Hello, World!");
+     */
+    async keys(keys) {
+        return await this.find().catch((e) => {
+            throw new FindError(e)
+        }).then(async () => {
+            this.switches.development = true;
+            return await (await this.find().catch((e) => {
+                throw new FindError(e)
+            }).then((result) => {
+                return result;
+            })).sendKeys(keys).then(() => {
+                return this.resetSwitches;
+            });
+        })
+    }
+
+    /**
+     * @name key
+     * @memberOf Element
+     * @description Sends keys to the element
+     * @returns {Promise&lt;*>}
+     * @example await element.send.key("H"); // Will send a single letter
+     * await element.send.key("enter"); // Will transform into correct modifier key unicode
+     */
+    async key(key) {
+        let modifierKeyCheck = key.toUpperCase().replace(" ", "_");
+        let modifiers = ["NULL", "CANCEL", "HELP", "BACK_SPACE", "TAB", "CLEAR", "RETURN", "ENTER", "SHIFT", "CONTROL",
+            "ALT", "PAUSE", "ESCAPE", "SPACE", "PAGE_UP", "PAGE_DOWN", "END", "HOME", "ARROW_LEFT", "LEFT", "ARROW_UP",
+            "UP", "ARROW_RIGHT", "RIGHT", "ARROW_DOWN", "DOWN", "INSERT", "DELETE", "SEMICOLON", "EQUALS", "NUMPAD0",
+            "NUMPAD1", "NUMPAD2", "NUMPAD3", "NUMPAD4", "NUMPAD5", "NUMPAD6", "NUMPAD7", "NUMPAD8", "NUMPAD9",
+            "MULTIPLY", "ADD", "SEPARATOR", "SUBTRACT", "DECIMAL", "DIVIDE", "F1", "F2", "F3", "F4", "F5", "F6", "F7",
+            "F8", "F9", "F10", "F11", "F12", "COMMAND", "META", "ZENKAKU_HANKAKU"];
+
+        if (modifiers.includes(modifierKeyCheck)) {
+            return await this.send.keys(Key[modifierKeyCheck]);
+        } else {
+            return await this.send.keys(key);
+        }
+    }
+
+}
+
+
+exports.Element = Element;</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Wed Jul 10 2019 13:06:15 GMT+0100 (British Summer Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+        </p>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

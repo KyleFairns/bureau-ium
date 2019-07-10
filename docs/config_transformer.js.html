@@ -1,0 +1,149 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: config_transformer.js</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                     
+                        <img src="../images/bureau-ium-release-pink-125x125.png" alt="logo">
+                    
+                     
+                        <h1 class="navbar-item">bureau-ium</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/KyleFairns/bureau-ium" target="_blank">Github</a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-getting-started.html">getting-started</a></li></ul></div><div class="category"><h2>Errors</h2><h3>Classes</h3><ul><li><a href="FindError.html">FindError</a></li><li><a href="TestError.html">TestError</a></li><li><a href="UrlConstructError.html">UrlConstructError</a></li></ul></div><div class="category"><h2>Internal</h2><h3>Classes</h3><ul><li><a href="Chain.html">Chain</a></li></ul><h3>Global</h3><ul><li><a href="global.html#config">config</a></li><li><a href="global.html#driver">driver</a></li></ul></div><div class="category"><h2>Test Data</h2><h3>Classes</h3><ul><li><a href="User.html">User</a></li></ul></div><div class="category"><h2>UI Interactions</h2><h3>Classes</h3><ul><li><a href="Browser.html">Browser</a></li><li><a href="Element.html">Element</a></li><li><a href="Wait.html">Wait</a></li></ul></div><div class="category"><h2>Url Interactions</h2><h3>Classes</h3><ul><li><a href="Url.html">Url</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>config_transformer.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const fs = require('fs'),
+    config = JSON.parse(fs.readFileSync(process.cwd() + '/bureau-ium.config.json')),
+    frameworkDefault = { // Default values for the framework to use in the event that something has not been supplied from the config
+        host: "https://www.google.co.uk",
+        browser: {
+            name: "chrome",
+            version: "75"
+        },
+        os: {
+            name: "Windows",
+            version: "10"
+        },
+        timeouts: {
+            step: 30,
+            scenario: 180
+        }
+    },
+    defaultProfile = config.profiles["default"] ? config.profiles["default"] : frameworkDefault,  // If a default profile exists, use it, if not, use system variables
+    profile = config.profiles[config.profile] || defaultProfile; // If the profile can be found, use it, or use system default values
+
+// Improvements?
+let newConfig = {
+    host: profile.host || defaultProfile.host,
+    browser: {
+        name: profile.browser.name || defaultProfile.browser.name,
+        version: profile.browser.version || defaultProfile.browser.version
+    },
+    os: {
+        name: profile.os.name || defaultProfile.os.name,
+        version: profile.os.version || defaultProfile.os.version
+    },
+    timeouts: {
+        step: 1000 * (parseInt(profile.timeouts.step, 10) || parseInt(defaultProfile.timeouts.step, 10)),
+        scenario: 1000 * (parseInt(profile.timeouts.scenario, 10) || parseInt(defaultProfile.timeouts.scenario)),
+    }
+};
+
+/**
+ * @category Internal
+ * @name config
+ * @description Processes the config.json in the parent of the features folder
+ * Checks stated profile exists, or uses the framework default. Will check every value to see if it exists in the profile
+ * stated in the config, then checks for a value in the default profile and will ultimately use the frameworkDefault if
+ * nothing else is found
+ * @type Object
+ */
+exports.config = newConfig;</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Wed Jul 10 2019 13:06:15 GMT+0100 (British Summer Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+        </p>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: abstraction/url.js</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                     
+                        <img src="../images/bureau-ium-release-pink-125x125.png" alt="logo">
+                    
+                     
+                        <h1 class="navbar-item">bureau-ium</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/KyleFairns/bureau-ium" target="_blank">Github</a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-getting-started.html">getting-started</a></li></ul></div><div class="category"><h2>Errors</h2><h3>Classes</h3><ul><li><a href="FindError.html">FindError</a></li><li><a href="TestError.html">TestError</a></li><li><a href="UrlConstructError.html">UrlConstructError</a></li></ul></div><div class="category"><h2>Internal</h2><h3>Classes</h3><ul><li><a href="Chain.html">Chain</a></li></ul><h3>Global</h3><ul><li><a href="global.html#config">config</a></li><li><a href="global.html#driver">driver</a></li></ul></div><div class="category"><h2>Test Data</h2><h3>Classes</h3><ul><li><a href="User.html">User</a></li></ul></div><div class="category"><h2>UI Interactions</h2><h3>Classes</h3><ul><li><a href="Browser.html">Browser</a></li><li><a href="Element.html">Element</a></li><li><a href="Wait.html">Wait</a></li></ul></div><div class="category"><h2>Url Interactions</h2><h3>Classes</h3><ul><li><a href="Url.html">Url</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>abstraction/url.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const {Chain} = require("./chain.js"),
+    {config} = require("../config_transformer.js"),
+    {UrlConstructError} = require("./errors.js"),
+    {driver} = require("../browser_setup.js"),
+    frisby = require("frisby");
+
+class Url extends Chain {
+
+    /**
+     * @category Url Interactions
+     * @constructs
+     * @extends Chain
+     * @param {string} url Can be a full url, or partial url completed by the host in the config file
+     * @classdesc For navigation using urls
+     * @example new Element({css: 'input[name="q"]'});
+     */
+    constructor(url) {
+        super();
+        let split = /(?&lt;scheme>^https?:\/\/)(?&lt;host>.+?)(?&lt;path>\/.*?)?(?&lt;querystring>[?].*)?$/.exec(url.match(/^https?:\/\//) ? url : `${config.host}${url}`); // https://regex101.com/r/o2XQ3e/2
+
+        if (!split.groups.scheme) {
+            throw new UrlConstructError("Scheme (http, https) must be provided");
+        } else if (!split.groups.host) {
+            throw new UrlConstructError("Host (www.domain.com, 192.168.0.1, etc) must be provided");
+        } else {
+            /**
+             * @name scheme
+             * @memberOf Url
+             * @description Gets the scheme (protocol) of the url
+             * @returns string
+             * @example url.get.scheme
+             *
+             */
+            this.scheme = split.groups.scheme;
+
+            /**
+             * @name host
+             * @memberOf Url
+             * @description Gets the host (domain) of the url
+             * @returns string
+             * @example  url.get.host
+             *
+             */
+            this.host = split.groups.host;
+
+            /**
+             * @name path
+             * @memberOf Url
+             * @description Gets the path of the url
+             * @returns string
+             * @example  url.get.path
+             */
+            this.path = split.groups.path || "/"; // Default to root if undefined - avoids "undefined" erroneously being placed in urls
+
+            /**
+             * @name querystring
+             * @memberOf Url
+             * @description Gets the querystring of the url
+             * @returns string
+             * @example  url.get.querystring
+             */
+            this.querystring = split.groups.querystring || ""; // Default to empty string - see above
+
+            /**
+             * @name url
+             * @memberOf Url
+             * @description Gets the full url
+             * @returns string
+             * @example  url.get.url
+             */
+            this.url = `${this.scheme}${this.host}${this.path}${this.querystring}`;
+        }
+    }
+
+    /**
+     * @name get
+     * @memberOf Url
+     * @description Does a get request on the url. See https://www.frisbyjs.com/http.html for more info
+     * @returns {*} - A frisby.js get request
+     * @example url.get.expect("status", 200);
+     */
+    get get(){
+        return frisby.get(this.url);
+    }
+
+    /**
+     * @name post
+     * @memberOf Url
+     * @description Does a post request on the url, with the data provided. See https://www.frisbyjs.com/http.html for more info
+     * @param data
+     * @returns {*} - A frisby.js post request
+     * @example url.post({
+            "name": John.Smith.name, "salary": John.Smith.salary, "age": John.Smith.age
+        }).expect('status', 200);
+     */
+    post(data){
+        return frisby.post(this.url, data);
+    }
+
+    /**
+     * @name delete
+     * @memberOf Url
+     * @description Does a delete request on the url. See https://www.frisbyjs.com/http.html for more info
+     * @returns {*} - A frisby.js delete request
+     * @example url.delete.expect("status", 200);
+     */
+    get delete(){
+        return frisby.del(this.url);
+    }
+
+    /**
+     * @name put
+     * @memberOf Url
+     * @description Does a put request on the url. See https://www.frisbyjs.com/http.html for more info
+     * @param data
+     * @returns {*}
+     */
+    put(data){
+        return frisby.put(this.url, data);
+    }
+
+    /**
+     * @name fetch
+     * @memberOf Url
+     * @description Does a fetch request on the url. See https://www.frisbyjs.com/http.html for more info
+     * @param options
+     * @returns {*}
+     */
+    fetch(options){
+        return frisby.fetch(this.url, options);
+    }
+
+    /**
+     * @name navigate
+     * @memberOf Url
+     * @description Navigates to the url
+     * @returns {Promise&lt;*>}
+     * @example await url.navigate
+     */
+    get navigate() {
+        return driver.get(this.url);
+    }
+}
+
+exports.Url = Url;</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Wed Jul 10 2019 13:06:15 GMT+0100 (British Summer Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+        </p>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

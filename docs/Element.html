@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: Element</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                     
+                        <img src="../images/bureau-ium-release-pink-125x125.png" alt="logo">
+                    
+                     
+                        <h1 class="navbar-item">bureau-ium</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/KyleFairns/bureau-ium" target="_blank">Github</a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-getting-started.html">getting-started</a></li></ul></div><div class="category"><h2>Errors</h2><h3>Classes</h3><ul><li><a href="FindError.html">FindError</a></li><li><a href="TestError.html">TestError</a></li><li><a href="UrlConstructError.html">UrlConstructError</a></li></ul></div><div class="category"><h2>Internal</h2><h3>Classes</h3><ul><li><a href="Chain.html">Chain</a></li></ul><h3>Global</h3><ul><li><a href="global.html#config">config</a></li><li><a href="global.html#driver">driver</a></li></ul></div><div class="category"><h2>Test Data</h2><h3>Classes</h3><ul><li><a href="User.html">User</a></li></ul></div><div class="category"><h2>UI Interactions</h2><h3>Classes</h3><ul><li><a href="Browser.html">Browser</a></li><li><a href="Element.html">Element</a></li><li><a href="Wait.html">Wait</a></li></ul></div><div class="category"><h2>Url Interactions</h2><h3>Classes</h3><ul><li><a href="Url.html">Url</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Class</p>
+                        <h1>Element</h1>
+                    </header>
+                    
+                    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>Element<span class="signature">(locator)</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">For interacting with the elements on the webpage</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <h3 class="title"><span>Constructor</span></h3>
+                <div class="members">
+                    <div class="member">
+
+    
+    <h4 class="name" id="Element">
+        
+        <span class="code-name">
+            new Element<span class="signature">(locator)</span><span class="type-signature"></span>
+        </span>
+    </h4>
+    
+
+    
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>locator</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Object</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The locator for the element. Can be anything accepted by selenium, in the format {<i>type<i>: <i>locator<i>}</td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="abstraction_element.js.html" class="button">View Source</a>
+            <span>
+                <a href="abstraction_element.js.html">abstraction/element.js</a>, <a href="abstraction_element.js.html#line17">line 17</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>new Element({css: 'input[name="q"]'})</code></pre>
+
+
+</div>
+                </div>
+            </div>
+        
+    
+    </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="Chain.html">Chain</a></li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class='vertical-section'>
+            <h3 class="title"><span>Members</span></h3>
+            <div class="members">
+            
+                <div class="member">
+
+<h4 class="name" id=".attribute">
+    
+        
+            <span class='tag'>static</span>
+        
+    
+    <span class="code-name">
+        attribute
+    </span>
+</h4>
+
+
+
+
+<div class="description">
+    Gets the attribute given of the element
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="abstraction_element.js.html" class="button">View Source</a>
+            <span>
+                <a href="abstraction_element.js.html">abstraction/element.js</a>, <a href="abstraction_element.js.html#line249">line 249</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>let attribute = await element.get.attribute("id");</code></pre>
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id=".clear">
+    
+        
+            <span class='tag'>static</span>
+        
+    
+    <span class="code-name">
+        clear
+    </span>
+</h4>
+
+
+
+
+<div class="description">
+    Clears the text from the element
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="abstraction_element.js.html" class="button">View Source</a>
+            <span>
+                <a href="abstraction_element.js.html">abstraction/element.js</a>, <a href="abstraction_element.js.html#line294">line 294</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>await element.clear;</code></pre>
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id=".cleared">
+    
+        
+            <span class='tag'>static</span>
+        
+    
+    <span class="code-name">
+        cleared
+    </span>
+</h4>
+
+
+
+
+<div class="description">
+    Clears the text from the element
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="abstraction_element.js.html" class="button">View Source</a>
+            <span>
+                <a href="abstraction_element.js.html">abstraction/element.js</a>, <a href="abstraction_element.js.html#line315">line 315</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>await element.can.be.cleared;</code></pre>
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id=".click">
+    
+        
+            <span class='tag'>static</span>
+        
+    
+    <span class="code-name">
+        click
+    </span>
+</h4>
+
+
+
+
+<div class="description">
+    Clicks on the element provided
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="abstraction_element.js.html" class="button">View Source</a>
+            <span>
+                <a href="abstraction_element.js.html">abstraction/element.js</a>, <a href="abstraction_element.js.html#line208">line 208</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>await element.click;</code></pre>
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id=".clicked">
+    
+        
+            <span class='tag'>static</span>
+        
+    
+    <span class="code-name">
+        clicked
+    </span>
+</h4>
+
+
+
+
+<div class="description">
+    Clicks on the element provided
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="abstraction_element.js.html" class="button">View Source</a>
+            <span>
+                <a href="abstraction_element.js.html">abstraction/element.js</a>, <a href="abstraction_element.js.html#line231">line 231</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>await element.can.be.clicked;</code></pre>
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id=".displayed">
+    
+        
+            <span class='tag'>static</span>
+        
+    
+    <span class="code-name">
+        displayed
+    </span>
+</h4>
+
+
+
+
+<div class="description">
+    Asserts the elements visibility
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="abstraction_element.js.html" class="button">View Source</a>
+            <span>
+                <a href="abstraction_element.js.html">abstraction/element.js</a>, <a href="abstraction_element.js.html#line104">line 104</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>await element.should.eventually.be.displayed</code></pre>
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id=".find">
+    
+        
+            <span class='tag'>static</span>
+        
+    
+    <span class="code-name">
+        find
+    </span>
+</h4>
+
+
+
+
+<div class="description">
+    Asserts that the element exists in the DOM
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="abstraction_element.js.html" class="button">View Source</a>
+            <span>
+                <a href="abstraction_element.js.html">abstraction/element.js</a>, <a href="abstraction_element.js.html#line127">line 127</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>await element.find();</code></pre>
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id=".found">
+    
+        
+            <span class='tag'>static</span>
+        
+    
+    <span class="code-name">
+        found
+    </span>
+</h4>
+
+
+
+
+<div class="description">
+    Asserts that the element exists in the DOM
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="abstraction_element.js.html" class="button">View Source</a>
+            <span>
+                <a href="abstraction_element.js.html">abstraction/element.js</a>, <a href="abstraction_element.js.html#line167">line 167</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>await element.can.be.found</code></pre>
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id=".key">
+    
+        
+            <span class='tag'>static</span>
+        
+    
+    <span class="code-name">
+        key
+    </span>
+</h4>
+
+
+
+
+<div class="description">
+    Sends keys to the element
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="abstraction_element.js.html" class="button">View Source</a>
+            <span>
+                <a href="abstraction_element.js.html">abstraction/element.js</a>, <a href="abstraction_element.js.html#line373">line 373</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>await element.send.key("H"); // Will send a single letterawait element.send.key("enter"); // Will transform into correct modifier key unicode</code></pre>
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id=".keys">
+    
+        
+            <span class='tag'>static</span>
+        
+    
+    <span class="code-name">
+        keys
+    </span>
+</h4>
+
+
+
+
+<div class="description">
+    Sends keys to the element
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="abstraction_element.js.html" class="button">View Source</a>
+            <span>
+                <a href="abstraction_element.js.html">abstraction/element.js</a>, <a href="abstraction_element.js.html#line351">line 351</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>await element.send.keys("Hello, World!");</code></pre>
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id=".language-chains-element">
+    
+        
+            <span class='tag'>static</span>
+        
+    
+    <span class="code-name">
+        language-chains-element
+    </span>
+</h4>
+
+
+
+
+<div class="description">
+    Language chains:   <ul>       <li>  in       <li>  into   </ul>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="abstraction_element.js.html" class="button">View Source</a>
+            <span>
+                <a href="abstraction_element.js.html">abstraction/element.js</a>, <a href="abstraction_element.js.html#line52">line 52</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>element.type.into.with("Hello, World")element.can.be.typed.into.with("Hello, World")</code></pre>
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id=".location">
+    
+        
+            <span class='tag'>static</span>
+        
+    
+    <span class="code-name">
+        location
+    </span>
+</h4>
+
+
+
+
+<div class="description">
+    Gets the co-ordinates of the element
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="abstraction_element.js.html" class="button">View Source</a>
+            <span>
+                <a href="abstraction_element.js.html">abstraction/element.js</a>, <a href="abstraction_element.js.html#line185">line 185</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>let location = await element.get.location;</code></pre>
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id=".locator">
+    
+        
+            <span class='tag'>static</span>
+        
+    
+    <span class="code-name">
+        locator
+    </span>
+</h4>
+
+
+
+
+<div class="description">
+    The locator for the element. Can be anything accepted by selenium, in the format {<i>type<i>: <i>locator<i>}
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="abstraction_element.js.html" class="button">View Source</a>
+            <span>
+                <a href="abstraction_element.js.html">abstraction/element.js</a>, <a href="abstraction_element.js.html#line20">line 20</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>await element.get.locator</code></pre>
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id=".switches-element">
+    
+        
+            <span class='tag'>static</span>
+        
+    
+    <span class="code-name">
+        switches-element
+    </span>
+</h4>
+
+
+
+
+<div class="description">
+    "Keyword" Switches:   <ul>       <li>  send       <li>  sent       <li>  fill       <li>  filled       <li>  type       <li>  typed   </ul>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="abstraction_element.js.html" class="button">View Source</a>
+            <span>
+                <a href="abstraction_element.js.html">abstraction/element.js</a>, <a href="abstraction_element.js.html#line30">line 30</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>element.send.key("enter") // Turns on "send" switchelement.can.be.filled.with("Hello, World!") // Turns on "filled" switch</code></pre>
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id=".text">
+    
+        
+            <span class='tag'>static</span>
+        
+    
+    <span class="code-name">
+        text
+    </span>
+</h4>
+
+
+
+
+<div class="description">
+    Gets the text of the element
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="abstraction_element.js.html" class="button">View Source</a>
+            <span>
+                <a href="abstraction_element.js.html">abstraction/element.js</a>, <a href="abstraction_element.js.html#line270">line 270</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>let text = await element.get.text;</code></pre>
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id=".with">
+    
+        
+            <span class='tag'>static</span>
+        
+    
+    <span class="code-name">
+        with
+    </span>
+</h4>
+
+
+
+
+<div class="description">
+    Sends keys to the element
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="abstraction_element.js.html" class="button">View Source</a>
+            <span>
+                <a href="abstraction_element.js.html">abstraction/element.js</a>, <a href="abstraction_element.js.html#line337">line 337</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>await element.fill.with("Hello, World!");await element.can.be.typed.into.with("Hello, World");</code></pre>
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Wed Jul 10 2019 13:06:16 GMT+0100 (British Summer Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+        </p>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
