@@ -9,3 +9,5 @@
  common errors, includes a functional library to interact with elements, 
  navigate with and send api requests to urls, and transforms the bureau-ium.config.json 
  for use elsewhere
+ 
+ For some examples of how to use it, see: https://github.com/KyleFairns/sia

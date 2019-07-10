@@ -1,6 +1,6 @@
 {
   "name": "bureau-ium",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "license": "MIT",
   "description": "A library powered by Selenium and Frisby.js to make writing tests simpler and debugging easier",
   "scripts": {
