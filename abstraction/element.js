@@ -2,7 +2,7 @@ const {driver} = require("../browser_setup.js"),
     {FindError, TestError} = require("./errors.js"),
     {Chain} = require("./chain.js"),
     {Wait} = require("./wait.js"),
-    {until} = require("selenium-webdriver");
+    {until, Key} = require("selenium-webdriver");
 
 
 class Element extends Chain {
@@ -19,12 +19,86 @@ class Element extends Chain {
 
         /**
          * @name locator
-         * @memberOf Url
+         * @memberOf Element
          * @description The locator for the element. Can be anything accepted by selenium, in the format {<i>type<i>: <i>locator<i>}
          * @returns Object
          * @example await element.get.locator
          */
         this.locator = locator;
+
+
+        /**
+         * @name switches-element
+         * @memberOf Element
+         * @description
+         * "Keyword" Switches:
+         *    <ul>
+         *        <li>  send
+         *        <li>  sent
+         *        <li>  fill
+         *        <li>  filled
+         *        <li>  type
+         *        <li>  typed
+         *    </ul>
+         *
+         * @example element.send.key("enter") // Turns on "send" switch
+         * element.can.be.filled.with("Hello, World!") // Turns on "filled" switch
+         */
+        ["send", "sent", "fill", "filled", "type", "typed"].forEach((descriptor) => {
+            this.switches[descriptor] = false;
+            return this;
+        });
+
+        /**
+         * @name language-chains-element
+         * @memberOf Element
+         * @description
+         * Language chains:
+         *    <ul>
+         *        <li>  in
+         *        <li>  into
+         *    </ul>
+         *
+         * @example element.type.into.with("Hello, World")
+         * element.can.be.typed.into.with("Hello, World")
+         *
+         */
+        ["into"].forEach((descriptor) => {
+            return this[descriptor] = (() => {
+                return this;
+            })();
+        });
+
+    }
+
+    get send() {
+        this.switches.send = true;
+        return this;
+    }
+
+    get sent() {
+        this.switches.sent = true;
+        return this;
+    }
+
+    get fill() {
+        this.switches.fill = true;
+        return this;
+    }
+
+    get filled() {
+        this.switches.filled = true;
+        return this;
+    }
+
+    get type() {
+        this.switches.type = true;
+        return this;
+    }
+
+    get typed() {
+        this.switches.typed = true;
+        return this;
     }
 
     /**
@@ -212,51 +286,77 @@ class Element extends Chain {
             });
         })().catch((e) => {
             throw new FindError(e);
-        }).then((result)=>{
+        }).then((result) => {
             return result;
         });
     }
 
-    get clear(){
+    /**
+     * @name clear
+     * @memberOf Element
+     * @description Clears the text from the element
+     * @returns {Promise<*>}
+     * @example await element.clear;
+     */
+    get clear() {
         return this.find().catch((e) => {
             throw new FindError(e)
         }).then(async () => {
-            this.switches.development = true;
-            return await (await this.find().catch((e) => {
-                throw new FindError(e)
-            }).then((result) => {
-                return result;
-            })).clear().then(() => {
-                return this.resetSwitches;
-            });
+            let text = await this.text;
+            for (let i = 0; i < text.length; i++) {
+                await found.send.key("back space");
+                if (i >= (text.length - 1)) {
+                    return this;
+                }
+            }
         })
     }
 
-    get send(){
-        this.switches.send = true;
+    /**
+     * @name cleared
+     * @memberOf Element
+     * @description Clears the text from the element
+     * @returns {Promise<*>}
+     * @example await element.can.be.cleared;
+     */
+    get cleared() {
+        return new Promise(async (resolve) => {
+            let result = await this.clear;
+            return resolve(result);
+        }).catch((e) => {
+            throw new FindError(e);
+        }).then((result) => {
+            return result;
+        });
+    }
+
+    get in() {
         return this;
     }
 
-    get fill(){
-        this.switches.send = true;
-        return this;
+    /**
+     * @name with
+     * @memberOf Element
+     * @description Sends keys to the element
+     * @returns {Promise<*>}
+     * @example await element.fill.with("Hello, World!");
+     * await element.can.be.typed.into.with("Hello, World");
+     */
+    async with(keys) {
+        return await this.clear.then(async () => {
+            return await this.send.keys(keys);
+        })
     }
 
-    get type(){
-        this.switches.send = true;
-        return this;
-    }
-
-    get in(){
-        return this;
-    }
-
-    with(keys){
-
-    }
-
-    keys(keys){
-        return this.find().catch((e) => {
+    /**
+     * @name keys
+     * @memberOf Element
+     * @description Sends keys to the element
+     * @returns {Promise<*>}
+     * @example await element.send.keys("Hello, World!");
+     */
+    async keys(keys) {
+        return await this.find().catch((e) => {
             throw new FindError(e)
         }).then(async () => {
             this.switches.development = true;
@@ -270,8 +370,29 @@ class Element extends Chain {
         })
     }
 
+    /**
+     * @name key
+     * @memberOf Element
+     * @description Sends keys to the element
+     * @returns {Promise<*>}
+     * @example await element.send.key("H"); // Will send a single letter
+     * await element.send.key("enter"); // Will transform into correct modifier key unicode
+     */
+    async key(key) {
+        let modifierKeyCheck = key.toUpperCase().replace(" ", "_");
+        let modifiers = ["NULL", "CANCEL", "HELP", "BACK_SPACE", "TAB", "CLEAR", "RETURN", "ENTER", "SHIFT", "CONTROL",
+            "ALT", "PAUSE", "ESCAPE", "SPACE", "PAGE_UP", "PAGE_DOWN", "END", "HOME", "ARROW_LEFT", "LEFT", "ARROW_UP",
+            "UP", "ARROW_RIGHT", "RIGHT", "ARROW_DOWN", "DOWN", "INSERT", "DELETE", "SEMICOLON", "EQUALS", "NUMPAD0",
+            "NUMPAD1", "NUMPAD2", "NUMPAD3", "NUMPAD4", "NUMPAD5", "NUMPAD6", "NUMPAD7", "NUMPAD8", "NUMPAD9",
+            "MULTIPLY", "ADD", "SEPARATOR", "SUBTRACT", "DECIMAL", "DIVIDE", "F1", "F2", "F3", "F4", "F5", "F6", "F7",
+            "F8", "F9", "F10", "F11", "F12", "COMMAND", "META", "ZENKAKU_HANKAKU"];
 
-
+        if (modifiers.includes(modifierKeyCheck)) {
+            return await this.send.keys(Key[modifierKeyCheck]);
+        } else {
+            return await this.send.keys(key);
+        }
+    }
 
 }
 

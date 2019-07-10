@@ -8,108 +8,62 @@ class Chain {
     constructor() {
         /**
          *  @memberOf Chain
-         *  @method switches
+         *  @name switches
          *  @description A collection of the switches that have been turned on for an element
-         *  @example chain.eventually;
+         *  @example chain.switches;
          *  @returns Object
          */
         this.switches = {};
+
+        /**
+         * @name switches-chain
+         * @memberOf Chain
+         * @description
+         * "Keyword" Switches:
+         *    <ul>
+         *        <li>  not
+         *    </ul>
+         *
+         * @example element.can.not.be.found // Turns on "not" switch
+         */
+        ["not"].forEach((descriptor) => {
+            this.switches[descriptor] = false;
+            return this;
+        });
+
+
+        /**
+         * @name language-chains-chain
+         * @memberOf Chain
+         * @description
+         * Language chains:
+         *    <ul>
+         *        <li>  eventually
+         *        <li>  can
+         *        <li>  should
+         *        <li>  be
+         *        <li>  is
+         *        <li>  a
+         *        <li>  an
+         *        <li>  and
+         *        <li>  but
+         *    </ul>
+         *
+         * @example element.type.in.with("")
+         * element.can.be.typed.into.with("")
+         *
+         */
+        ["eventually", "can", "should", "be", "is", "a", "an", "and", "but"].forEach((descriptor) => {
+            this[descriptor] = (() => {
+                return this;
+            })()
+        })
     }
 
     /**
      *  @memberOf Chain
-     *  @method resetSwitches
-     *  @description Resets all of the switches turned on so that the language chain can continue without error.
-     *  @example chain.resetSwitches;
-     *  @returns Chain
-     */
-    get resetSwitches() {
-        this.switches = {};
-        return this;
-    }
-
-
-    /**
-     *  @memberOf Chain
-     *  @method eventually
-     *  @description A word to add readability
-     *  @example chain.eventually;
-     *  @returns Chain
-     */
-    get eventually() {
-        return this;
-    }
-
-    /**
-     *  @memberOf Chain
-     *  @method can
-     *  @description A word to add readability
-     *  @example chain.can;
-     *  @returns Chain
-     */
-    get can() {
-        return this;
-    }
-
-    /**
-     *  @memberOf Chain
-     *  @method should
-     *  @description A word to add readability
-     *  @example chain.should;
-     *  @returns Chain
-     */
-    get should() {
-        return this;
-    }
-
-    /**
-     *  @memberOf Chain
-     *  @method be
-     *  @description A word to add readability
-     *  @example chain.be;
-     *  @returns Chain
-     */
-    get be() {
-        return this;
-    }
-
-    /**
-     *  @memberOf Chain
-     *  @method is
-     *  @description A word to add readability
-     *  @example chain.is;
-     *  @returns Chain
-     */
-    get is() {
-        return this;
-    }
-
-    /**
-     *  @memberOf Chain
-     *  @method a
-     *  @description A word to add readability
-     *  @example chain.a;
-     *  @returns Chain
-     */
-    get a() {
-        return this;
-    }
-
-    /**
-     *  @memberOf Chain
-     *  @method and
-     *  @description A word to add readability
-     *  @example chain.and;
-     *  @returns Chain
-     */
-    get and() {
-        return this;
-    }
-
-    /**
-     *  @memberOf Chain
-     *  @method get
-     *  @description A word to add readability
+     *  @name get
+     *  @description Word for increasing readability
      *  @example chain.get;
      *  @returns Chain
      */
@@ -119,11 +73,16 @@ class Chain {
 
     /**
      *  @memberOf Chain
-     *  @method not
-     *  @description This turns on the "not" switch for the Chain
-     *  @example chain.not;
+     *  @name resetSwitches
+     *  @description Resets all of the switches turned on so that the language chain can continue without error.
+     *  @example chain.resetSwitches;
      *  @returns Chain
      */
+    get resetSwitches() {
+        this.switches = {};
+        return this;
+    }
+
     get not() {
         this.switches.not = true;
         return this;

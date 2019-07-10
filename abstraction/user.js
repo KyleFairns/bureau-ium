@@ -8,7 +8,7 @@ class User extends Chain {
      * @extends Chain
      * @param {Object} details All details needed for the user. Will be able to be accessed as the object describes
      * @classdesc For user detail storage
-     * @example new User({name: "Joan Griffiths", age: "34", salary: "58000"}).name
+     * @example new User({name: "Joan Griffiths", age: "34", salary: "58000"}).age // returns 34
      */
     constructor(details){
         super();
@@ -20,5 +20,4 @@ class User extends Chain {
         });
     }
 }
-
 exports.User = User;

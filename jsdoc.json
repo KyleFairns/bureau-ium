@@ -1,0 +1,31 @@
+{
+  "opts": {
+    "template": "node_modules/better-docs",
+    "encoding": "utf8",
+    "destination": "./docs/",
+    "recurse": true,
+    "tutorials": "./tutorials"
+  },
+  "tags": {
+    "allowUnknownTags": ["category"]
+  },
+  "plugins": [
+    "node_modules/better-docs/category"
+  ],
+  "source": {
+    "include": ["./", "./README.md"],
+    "exclude": ["./node_modules", "./docs", "./tutorials", "./sia.js"]
+  },
+  "templates": {
+    "better-docs": {
+      "name": "bureau-ium",
+      "logo": "../images/bureau-ium-release-pink-125x125.png",
+      "navigation": [
+        {
+          "label": "Github",
+          "href": "https://github.com/KyleFairns/bureau-ium"
+        }
+      ]
+    }
+  }
+}

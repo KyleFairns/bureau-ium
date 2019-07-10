@@ -18,6 +18,23 @@ class Wait extends Chain {
     }
 
     /**
+     * @name milliseconds
+     * @memberOf Wait
+     * @description Waits the given amount of time
+     * @returns {Promise<*>}
+     * @example await new Wait(500).milliseconds
+     *
+     */
+    get milliseconds() {
+        return (async () => {
+            return await new Promise(done => setTimeout(done, this.time))
+                .then(() => {
+                    return true;
+                });
+        })();
+    }
+
+    /**
      * @name seconds
      * @memberOf Wait
      * @description Waits the given amount of time

@@ -1,11 +1,4 @@
 // Index of Abstractions
-
-// Consider: A wrapper for all of this (gherkin-lang?), that will mean that you will be able to write tests in fully described English
-// Given().I.am.on(google.homepage); - Url class passed into step
-// When(google.search).is.visible; - Element class passed into step
-// And().I.have.filled(google.search).with("Hey, that's pretty good").and.pressed(Key.ENTER); - Element class, string and key press passed into step
-// Then(google.result).should.eventually.be.visible; - Element class passed into step
-
 const {Element} = require("./element.js"),
     {Wait} = require("./wait.js"),
     {Browser} = require("./browser.js"),

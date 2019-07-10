@@ -2,6 +2,9 @@
   "name": "bureau-ium",
   "version": "1.0.0-alpha.0",
   "description": "A library powered by Selenium and Frisby.js to make writing tests simpler and debugging easier",
+  "scripts": {
+    "docs": "./node_modules/.bin/jsdoc -c ./jsdoc.json"
+  },
   "dependencies": {
     "jsdoc": "^3.6.2",
     "better-docs": "^1.1.6",

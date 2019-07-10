@@ -1,6 +1,8 @@
 const {Builder} = require('selenium-webdriver');
 const {config} = require('./config_transformer.js');
 
+require("chromedriver");
+
 let started = false,
     driver = startDriver();
 
