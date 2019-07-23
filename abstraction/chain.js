@@ -42,6 +42,8 @@ class Chain {
          *        <li>  can
          *        <li>  should
          *        <li>  be
+         *        <li>  able
+         *        <li>  to
          *        <li>  is
          *        <li>  a
          *        <li>  an
@@ -49,11 +51,11 @@ class Chain {
          *        <li>  but
          *    </ul>
          *
-         * @example element.type.in.with("")
-         * element.can.be.typed.into.with("")
+         * @example chain.eventually.should.be.able.to
+         * await chain.can.be
          *
          */
-        ["eventually", "can", "should", "be", "is", "a", "an", "and", "but"].forEach((descriptor) => {
+        ["eventually", "can", "should", "be", "able", "to",  "is", "a", "an", "and", "but"].forEach((descriptor) => {
             this[descriptor] = (() => {
                 return this;
             })()

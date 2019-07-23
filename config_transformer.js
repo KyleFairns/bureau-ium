@@ -12,7 +12,8 @@ const fs = require('fs'),
         },
         timeouts: {
             step: 30,
-            scenario: 180
+            scenario: 180,
+            suite: 1800
         }
     },
     defaultProfile = config.profiles["default"] ? config.profiles["default"] : frameworkDefault,  // If a default profile exists, use it, if not, use system variables
@@ -32,6 +33,7 @@ let newConfig = {
     timeouts: {
         step: 1000 * (parseInt(profile.timeouts.step, 10) || parseInt(defaultProfile.timeouts.step, 10)),
         scenario: 1000 * (parseInt(profile.timeouts.scenario, 10) || parseInt(defaultProfile.timeouts.scenario)),
+        suite: 1000 * (parseInt(profile.timeouts.suite, 10) || parseInt(defaultProfile.timeouts.suite))
     }
 };
 

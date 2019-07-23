@@ -2,6 +2,7 @@ const {driver} = require("../browser_setup.js"),
     {FindError, TestError} = require("./errors.js"),
     {Chain} = require("./chain.js"),
     {Wait} = require("./wait.js"),
+    wait = new Wait(),
     {until, Key} = require("selenium-webdriver");
 
 
@@ -44,10 +45,10 @@ class Element extends Chain {
          * @example element.send.key("enter") // Turns on "send" switch
          * element.can.be.filled.with("Hello, World!") // Turns on "filled" switch
          */
-        ["send", "sent", "fill", "filled", "type", "typed"].forEach((descriptor) => {
-            this.switches[descriptor] = false;
-            return this;
-        });
+        ["send", "sent", "fill", "filled", "type", "typed", "hold", "held", "release", "released", "development"]
+            .forEach((descriptor) => {
+                this.switches[descriptor] = false;
+            });
 
         /**
          * @name language-chains-element
@@ -63,12 +64,18 @@ class Element extends Chain {
          * element.can.be.typed.into.with("Hello, World")
          *
          */
-        ["into"].forEach((descriptor) => {
-            return this[descriptor] = (() => {
-                return this;
-            })();
-        });
+        ["into"]
+            .forEach((descriptor) => {
+                return this[descriptor] = (() => {
+                    return this;
+                })();
+            });
 
+    }
+
+    get development(){
+        this.switches.development = true;
+        return this;
     }
 
     get send() {
@@ -111,14 +118,12 @@ class Element extends Chain {
     get displayed() {
         if (this.switches.not) {
             return (async () => {
-                this.switches.development = true;
-                await Wait.for(until.elementIsNotVisible(await this.find()));
+                await wait.for.element(this).to.not.be.visible;
                 return this.resetSwitches;
             })();
         } else {
             return (async () => {
-                this.switches.development = true;
-                await Wait.for(until.elementIsVisible(await this.find()));
+                await wait.for.element(this).to.be.visible;
                 return this.resetSwitches;
             })();
         }
@@ -155,12 +160,8 @@ class Element extends Chain {
                 });
             })();
         } else {
-            return (async () => {
-                return await Wait.for(until.elementLocated(this.locator)).then(() => {
-                    return this;
-                });
-
-            })();
+            await wait.for.element(this).to.be.located;
+            return this;
         }
     }
 
@@ -190,19 +191,17 @@ class Element extends Chain {
      * @example let location = await element.get.location;
      */
     get location() {
-        return new Promise(async () => {
-            this.switches.development = true;
-            return new Promise(await this.find().catch((e) => {
+        return (async () => {
+            return await (await this.development.find().catch((e) => {
                 throw new FindError(e)
             }).then((result) => {
                 return result;
             })).getRect().catch((e) => {
                 throw new TestError(e);
             }).then((result) => {
-                return {x: result.x, y: result.y};
+                return {x: Number(result.x), y: Number(result.y)};
             });
-
-        })()
+        })();
     }
 
     /**
@@ -216,16 +215,14 @@ class Element extends Chain {
         return this.find().catch((e) => {
             throw new FindError(e)
         }).then(async () => {
-            this.switches.development = true;
-            return await (await this.find().catch((e) => {
-                throw new FindError(e)
-            }).then((result) => {
-                return result;
-            })).click().then(() => {
+            return await driver.actions({bridge: true}).move({
+                x: 0,
+                y: 0,
+                origin: await this.development.find()
+            }).click().perform().then(() => {
                 return this.resetSwitches;
             });
         })
-        // await driver.actions({bridge: false}).move(this.location).click().perform(); // TODO: Will fix issue where elements are unclickable due to being covered by a transparent element, but won't work yet due to a bug: https://github.com/SeleniumHQ/selenium/issues/7191
     }
 
     /**
@@ -256,8 +253,7 @@ class Element extends Chain {
      */
     async attribute(attribute) {
         return await this.find().then(async () => {
-            this.switches.development = true;
-            return await (await this.find().catch((e) => {
+            return await (await this.development.find().catch((e) => {
                 throw new FindError(e)
             }).then((result) => {
                 return result;
@@ -275,9 +271,8 @@ class Element extends Chain {
      * @example let text = await element.get.text;
      */
     get text() {
-        this.switches.development = true;
         return (async () => {
-            return (await this.find().catch((e) => {
+            return await (await this.development.find().catch((e) => {
                 throw new FindError(e)
             }).then((result) => {
                 return result;
@@ -359,14 +354,33 @@ class Element extends Chain {
         return await this.find().catch((e) => {
             throw new FindError(e)
         }).then(async () => {
-            this.switches.development = true;
-            return await (await this.find().catch((e) => {
+            let element = await this.development.find().catch((e) => {
                 throw new FindError(e)
             }).then((result) => {
                 return result;
-            })).sendKeys(keys).then(() => {
-                return this.resetSwitches;
             });
+
+            if (this.switches.sent || this.switches.send) {
+                return await element.sendKeys(keys).then(() => {
+                    return this.resetSwitches;
+                });
+            } else if (this.switches.hold || this.switches.held) {
+                if (key instanceof Array) {
+                    return await keys.forEach(async (key) => {
+                        await driver.actions({bridge: true}).keyDown(keys).perform();
+                    });
+                } else {
+                    return await driver.actions({bridge: true}).keyDown(keys).perform();
+                }
+            }else if (this.switches.release || this.switches.released) {
+                if (key instanceof Array) {
+                    return await keys.forEach(async (key) => {
+                        await driver.actions({bridge: true}).keyUp(keys).perform();
+                    });
+                } else {
+                    return await driver.actions({bridge: true}).keyUp(keys).perform();
+                }
+            }
         })
     }
 
