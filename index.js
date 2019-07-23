@@ -1,6 +1,7 @@
 const {Element, Url, User, Browser, Wait} = require("./abstraction/abstractions.js"),
     {config} = require("./config_transformer"),
-    {driver} = require("./browser_setup");
+    {driver, pause} = require("./browser_setup");
+
 
 exports.Browser = Browser;
 exports.Element = Element;
@@ -10,3 +11,5 @@ exports.Wait = Wait;
 
 exports.driver = driver;
 exports.config = config;
+
+exports.pause = pause;

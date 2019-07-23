@@ -3,19 +3,25 @@ const {config} = require('./config_transformer.js');
 
 require("chromedriver");
 
-let started = false,
-    driver = startDriver();
+let shouldIPause = false,
+    driver;
 
 // Integrate with BrowserStack for more browsers
 function startDriver() {
-    if (!started) {
+    if (!driver) {
         return new Builder().forBrowser(config.browser.name).build();
     } else {
-        started = true;
         return driver;
     }
 }
 
+function pause() {
+    let shouldIPause = true;
+}
+
+function getPaused() {
+    return shouldIPause;
+}
 
 /**
  * @category Internal
@@ -25,7 +31,10 @@ function startDriver() {
  * browsers specified, handled by the startDriver function, and will run the Selenium code through it natively).
  * Could also add parallel functionality within the framework itself after doing a re-haul, whereby a parallel executor
  * will wrap tests (this may end up being a mocha only feature, but with more thought may work for cucumber)
- * @type Class
  */
-exports.driver = driver;
+
+exports.driver = startDriver();
+exports.pause = pause;
+exports.getPaused = getPaused;
+
 
